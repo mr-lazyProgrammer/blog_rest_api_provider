@@ -1,6 +1,7 @@
 import 'package:blog_rest_api_with_provider/data/model/get_all_post_response.dart';
 import 'package:dio/dio.dart';
 
+import '../model/blog_upload_response.dart';
 import '../model/get_one_post_response.dart';
 
 class BlogApiService{
@@ -25,5 +26,10 @@ class BlogApiService{
     final postList = onePost.data as List;
     final post = GetOnePostResponse.fromJson(postList[0]);
     return post;
+  }
+
+  Future<BlogUploadResponse> blogPostUpload({required String title,required String body,required FormData data})async{
+    final blogUploadResponse = await dio.post("${baseUrl}post?title=$title&$body",data: data);
+    return BlogUploadResponse.fromJson(blogUploadResponse.data);
   }
 }

@@ -24,7 +24,21 @@ class _BlogPostDetailScreenState extends State<BlogPostDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(),
+      appBar:AppBar(
+        title: Consumer<GetCompleteNotifier>(
+          builder: (_,getCompleteNotifier,__){
+            GetCompletePostState getCompletePostState = getCompleteNotifier.getCompletePostState;
+            if(getCompletePostState is GetCompletePostSuccess){
+              GetOnePostResponse getOnePostResponse = getCompletePostState.getOnePostResponse;
+              return Text('${getOnePostResponse.title}');
+            }else if(getCompletePostState is GetCompletePostFailed){
+              return const Text('Something Wrong');
+            }
+            return const Text('....');
+          },
+        ),
+        centerTitle: true,
+      ),
       body: Consumer<GetCompleteNotifier>(
         builder: (_,getCompleteNotifier,__){
           GetCompletePostState getCompletePostState = getCompleteNotifier.getCompletePostState;
