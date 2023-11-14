@@ -2,6 +2,7 @@ import 'package:blog_rest_api_with_provider/data/model/get_all_post_response.dar
 import 'package:blog_rest_api_with_provider/provider/get_all_post/get_all_post_state.dart';
 import 'package:blog_rest_api_with_provider/provider/get_all_post/get_all_provider.dart';
 import 'package:blog_rest_api_with_provider/ui/screen/blog_post_detail_screen.dart';
+import 'package:blog_rest_api_with_provider/ui/screen/blog_upload_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -66,6 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
           return const Center(child: CircularProgressIndicator());
         },
 
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ()async{
+          final result = await Navigator.push(context, MaterialPageRoute(builder: (_) => const BlogUploadScreen()));
+          if(result != null && result == "success"){
+            if(mounted){
+              _getAllPost(context);
+            }
+          }
+        },child: const Icon(Icons.add),
       ),
     );
   }

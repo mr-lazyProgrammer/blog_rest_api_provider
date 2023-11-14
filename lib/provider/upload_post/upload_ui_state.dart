@@ -4,6 +4,10 @@ abstract class UploadUiState{
 
 }
 
+class UploadFormState extends UploadUiState{
+
+}
+
 class UploadUiLoading extends UploadUiState{
   final int progress;
 
