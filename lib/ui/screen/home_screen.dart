@@ -33,23 +33,29 @@ class _HomeScreenState extends State<HomeScreen> {
           GetAllPostState getAllPostState = getAllProvider.getAllPostState;
           if(getAllPostState is GetAllPostSuccess){
             List<GetAllPostResponse> getAllPostResponseList = getAllPostState.getAllPostList;
-            return ListView.builder(
-                itemCount: getAllPostResponseList.length,
-                itemBuilder: (context,position){
-                  GetAllPostResponse getAllPostResponse = getAllPostResponseList[position];
-                  return InkWell(
-                    onTap: (){
-                      if(getAllPostResponse.id != null) {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => BlogPostDetailScreen(id: getAllPostResponse.id!)));
-                      }
-                    },
-                    child: Card(
-                      child: ListTile(
-                        title: Text('${getAllPostResponse.title}'),
+            return RefreshIndicator(
+              onRefresh: (){
+                _getAllPost(context);
+                return Future.delayed(const Duration(seconds: 1));
+              },
+              child: ListView.builder(
+                  itemCount: getAllPostResponseList.length,
+                  itemBuilder: (context,position){
+                    GetAllPostResponse getAllPostResponse = getAllPostResponseList[position];
+                    return InkWell(
+                      onTap: (){
+                        if(getAllPostResponse.id != null) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => BlogPostDetailScreen(id: getAllPostResponse.id!)));
+                        }
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text('${getAllPostResponse.title}'),
+                        ),
                       ),
-                    ),
-                  );
-                });
+                    );
+                  }),
+            );
           }else if(getAllPostState is GetAllPostError){
             return Center(
               child: Column(

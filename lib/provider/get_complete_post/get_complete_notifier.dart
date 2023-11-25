@@ -18,6 +18,12 @@ class GetCompleteNotifier extends ChangeNotifier{
       notifyListeners();
     }catch(_){
       getCompletePostState = GetCompletePostFailed("Something Wrong");
+      notifyListeners();
     }
+  }
+
+  void tryAgain(){
+    getCompletePostState = GetCompletePostLoading();
+    notifyListeners();
   }
 }

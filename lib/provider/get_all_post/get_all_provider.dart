@@ -17,6 +17,7 @@ class GetAllNotifier extends ChangeNotifier{
       notifyListeners();
     }catch(e){
       getAllPostState = GetAllPostError(e.toString());
+      notifyListeners();
     }
   }
 }
